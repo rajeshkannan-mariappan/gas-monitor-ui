@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Live Gas Sensor Monitor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      text-align: center;
+      padding-top: 50px;
+    }
+    .card {
+      background: white;
+      display: inline-block;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    .value {
+      font-size: 60px;
+      color: #e91e63;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Live Gas Sensor Value</h1>
+    <div class="value" id="gasValue">Loading...</div>
+  </div>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    // ✅ Your Firebase Config (replaced with your credentials)
+    const firebaseConfig = {
+      apiKey: "XDugQL5qW5kWomj3NJHdW9xdu8KMECcVnVTitCSs",
+      authDomain: "gasp3-f9d06.firebaseapp.com",
+      databaseURL: "https://gasp3-f9d06-default-rtdb.firebaseio.com",
+      projectId: "gasp3-f9d06",
+      storageBucket: "gasp3-f9d06.appspot.com",
+      messagingSenderId: "your_sender_id", // Optional
+      appId: "your_app_id" // Optional
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    // Reference to your gas value
+    const gasRef = database.ref("/gas_value");
+
+    gasRef.on("value", (snapshot) => {
+      const value = snapshot.val();
+      document.getElementById("gasValue").textContent = value ?? "No Data";
+    });
+  </script>
+
+</body>
+</html>
